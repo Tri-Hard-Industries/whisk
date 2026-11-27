@@ -23,14 +23,14 @@ jobs:
         run: pip install pandas requests nbconvert ipykernel
 
       - name: Fetch CPI
-        working-directory: inflation
+        working-directory: data/inflation
         run: jupyter nbconvert --to notebook --execute fetch.ipynb --output /tmp/fetch.ipynb
 
       - name: Commit database
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add inflation/inflation.db
+          git add data/inflation/inflation.db
           git diff --cached --quiet || git commit -m "Update CPI database"
           git push
 
