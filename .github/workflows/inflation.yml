@@ -33,3 +33,9 @@ jobs:
           git add inflation/inflation.db
           git diff --cached --quiet || git commit -m "Update CPI database"
           git push
+
+      - name: Verify database
+        run: |
+          git status --short
+          git diff --stat
+          sqlite3 inflation/inflation.db "SELECT * FROM cpi_base ORDER BY Date DESC LIMIT 5;"
